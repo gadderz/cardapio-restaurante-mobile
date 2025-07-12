@@ -1,6 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { LoginScreen } from "../views/screens/Auth/LoginScreen";
 import { RegisterScreen } from "../views/screens/Auth/RegisterScreen";
+import { MenuScreen } from "../views/screens/Menu/MenuScreen";
 
 const Stack = createStackNavigator();
 
@@ -9,6 +10,7 @@ export const AppNavigator = () => {
     <Stack.Navigator initialRouteName="Login">
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Register" component={RegisterScreen} />
+      <Stack.Screen name="Menu" component={MenuScreen} />
     </Stack.Navigator>
   );
 };
