@@ -1,16 +1,18 @@
-import { View } from "react-native";
-import CadastroRestaurante from "./views/CadastroRestaurante";
+import { AppNavigator } from "./navigation/AppNavigator";
 
 export default function Index() {
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <CadastroRestaurante />
-    </View>
+   return (
+      <AppNavigator />
   );
+  // return (
+  //   <View
+  //     style={{
+  //       flex: 1,
+  //       justifyContent: "center",
+  //       alignItems: "center",
+  //     }}
+  //   >
+  //     <Text>Edit app/index.tsx to edit this screen.</Text>
+  //   </View>
+  // );
 }

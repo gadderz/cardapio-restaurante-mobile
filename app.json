@@ -10,7 +10,7 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.cardapiorestaurantemobile"
+      "bundleIdentifier": "com.anonymous.cardapio-restaurante-mobile"
     },
     "android": {
       "adaptiveIcon": {
