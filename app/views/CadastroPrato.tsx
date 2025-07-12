@@ -1,6 +1,6 @@
-import * as ImagePicker from 'expo-image-picker'
-import { useSearchParams } from 'expo-router/build/hooks'
-import React, { useState } from 'react'
+import * as ImagePicker from 'expo-image-picker';
+import { useSearchParams } from 'expo-router/build/hooks';
+import React, { useState } from 'react';
 import {
   Alert,
   Button, Image,
@@ -8,10 +8,12 @@ import {
   StyleSheet,
   Text, TextInput,
   View
-} from 'react-native'
-import { v4 } from 'uuid'
-import { cadastrarPrato } from '../controllers/CadastroPratoController'
-import { Prato } from '../models/Prato'
+} from 'react-native';
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid';
+import { cadastrarPrato } from '../controllers/CadastroPratoController';
+import { Prato } from '../models/Prato';
+import { TextInputMask } from 'react-native-masked-text';
 
 const CadastroPrato = () => {
   const [nome, setNome] = useState('')
@@ -62,7 +64,7 @@ const CadastroPrato = () => {
     }
 
     const novoPrato: Prato = {
-      id: v4() as string,
+      id: uuidv4(),
       nome,
       descricao,
       preco: parseFloat(preco),
@@ -104,12 +106,12 @@ const CadastroPrato = () => {
       />
       {erros.descricao && <Text style={styles.errorText}>A descrição é obrigatória.</Text>}
 
-      <TextInput
-        placeholder="Preço"
+      <TextInputMask
+        type={'money'}
         value={preco}
-        onChangeText={setPreco}
-        keyboardType="numeric"
+        onChangeText={(text) => setPreco(text)}
         style={[styles.input, erros.preco && styles.inputError]}
+        placeholder="Preço"
       />
       {erros.preco && <Text style={styles.errorText}>O preço é obrigatório.</Text>}
   
