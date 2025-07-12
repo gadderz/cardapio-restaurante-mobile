@@ -1,8 +1,14 @@
-class User {
-  constructor(fistName: string, lastName: string) {
-    this.firstName = fistName;
-    this.lastName = lastName;
-  }
+export type UserType = "client" | "admin";
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+  type: UserType;
 }
 
-export default User;
+export interface AuthState {
+  user: User | null;
+  isAuthenticated: boolean;
+}
