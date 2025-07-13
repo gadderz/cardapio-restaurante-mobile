@@ -1,13 +1,8 @@
-// src/services/ProductService.ts
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { generateId } from '../helpers/utils';
 import { Product } from '../models/Product';
 
 const PRODUCTS_STORAGE_KEY = '@restaurantApp:products';
-
-const generateId = () => {
-  return Math.random().toString(36).substr(2, 9);
-};
 
 export const ProductService = {
   async create(productData: Omit<Product, 'id'>): Promise<Product> {

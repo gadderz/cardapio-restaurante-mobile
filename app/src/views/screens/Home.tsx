@@ -1,21 +1,18 @@
-// app/menu.tsx
-
 import React, { useEffect, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { AuthController } from "../../controllers/AuthController";
 import { RestaurantController } from "../../controllers/RestaurantController";
-import { Restaurante } from "../../models/Restaurante";
+import { Restaurant } from "../../models/Restaurant";
 import { HomeScreenProps } from "./types";
 
-// ALTERADO: para export default
-export default function HomeScreen({ navigation } : HomeScreenProps) {
+export default function HomeScreen({ navigation }: HomeScreenProps) {
 
   const [isAdmin, setIsAdmin] = useState(false)
   const [selectedRestaurant, setSelectedRestaurant] = useState<string | null>(null);
-  const [restaurants, setRestaurants] = useState<Restaurante[]>([]);
+  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
 
   useEffect(() => {
-    const verificarUsuario = async () => {
+    const verifyUserType = async () => {
       const user = await AuthController.getCurrentUser()
       if (user && user.type === "admin") {
         setIsAdmin(true)
@@ -23,21 +20,20 @@ export default function HomeScreen({ navigation } : HomeScreenProps) {
     }
 
     const searchRestaurants = async () => {
-      const restaurants = await RestaurantController.searchRestaurants();
+      const restaurants = await RestaurantController.getAll();
       setRestaurants(restaurants);
     }
 
-    verificarUsuario()
+    verifyUserType()
     searchRestaurants();
   }, [])
 
-  // Função para simular a escolha de um restaurante e ir para o cardápio dele
-  const openCardapio = (restaurantId: string) => {
+  const openMenu = (restaurantId: string) => {
     navigation.navigate("Menu", { restaurantId });
   };
 
-  const openCadastroRestaurante = () => {
-    navigation.navigate("Restaurant"); // Navegando para a tela de cadastro de restaurante
+  const openRestaurantsScreen = () => {
+    navigation.navigate("Restaurant");
   };
 
   return (
@@ -51,37 +47,39 @@ export default function HomeScreen({ navigation } : HomeScreenProps) {
           {restaurants.map((restaurant) => (
             <TouchableOpacity
               key={restaurant.id}
-              onPress={() => setSelectedRestaurant(restaurant.id)}
+              onPress={() => setSelectedRestaurant(restaurant.id ?? null)}
               style={{
                 padding: 12,
                 backgroundColor: selectedRestaurant === restaurant.id ? '#e0e0e0' : 'white',
               }}
             >
-              <Text>{restaurant.nome}</Text>
+              <Text>{restaurant.name}</Text>
             </TouchableOpacity>
           ))}
         </View>
       </View>
-      
-      <TouchableOpacity 
-        onPress={() => openCardapio(selectedRestaurant ?? '')}
+
+      <TouchableOpacity
+        onPress={() => openMenu(selectedRestaurant ?? '')}
         style={{ backgroundColor: 'green', padding: 15, borderRadius: 5 }}
         disabled={!selectedRestaurant}
       >
         <Text style={{ color: 'white', fontSize: 16 }}>Ver Cardápio</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity
-        onPress={() => navigation.navigate("Product", { restaurantId: selectedRestaurant ?? '' })}
-        style={{ backgroundColor: 'blue', padding: 15, borderRadius: 5, marginTop: 20 }}
-        disabled={!selectedRestaurant}
-      >
-        <Text style={{ color: 'white', fontSize: 16 }}>📋 Ir para o Cadastro de Prato</Text>
-      </TouchableOpacity>
+      {isAdmin && (
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Product", { restaurantId: selectedRestaurant ?? '' })}
+          style={{ backgroundColor: 'blue', padding: 15, borderRadius: 5, marginTop: 20 }}
+          disabled={!selectedRestaurant}
+        >
+          <Text style={{ color: 'white', fontSize: 16 }}>📋 Ir para o Cadastro de Prato</Text>
+        </TouchableOpacity>
+      )}
 
       {isAdmin && (
         <TouchableOpacity
-          onPress={() => openCadastroRestaurante()}
+          onPress={() => openRestaurantsScreen()}
           style={{
             backgroundColor: "darkblue",
             padding: 15,

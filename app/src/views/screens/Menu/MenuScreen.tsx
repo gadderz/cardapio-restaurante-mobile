@@ -16,13 +16,11 @@ import { Product } from '../../../models/Product';
 import { MenuScreenProps } from '../types';
 
 export default function MenuScreen({ route }: MenuScreenProps) {
-  // NOVO: Pegando o restaurantId com o hook do Expo Router
   const restaurantId = route.params.restaurantId;
 
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // O useEffect e o resto do componente continuam perfeitos!
   useEffect(() => {
     const loadProducts = async () => {
       setIsLoading(true);
@@ -40,7 +38,7 @@ export default function MenuScreen({ route }: MenuScreenProps) {
     if (restaurantId) {
       loadProducts();
     }
-  }, [restaurantId]); 
+  }, [restaurantId]);
 
   if (isLoading) {
     return (
@@ -80,7 +78,6 @@ export default function MenuScreen({ route }: MenuScreenProps) {
     </SafeAreaView>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {

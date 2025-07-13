@@ -3,7 +3,6 @@ import { Button, Text, TextInput, View } from "react-native";
 import { AuthController } from "../../../controllers/AuthController";
 import { RegisterScreenProps } from "../types";
 
-// ALTERADO: para export default
 export default function RegisterScreen({ navigation }: RegisterScreenProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -12,8 +11,7 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
 
   const handleRegister = async () => {
     await AuthController.register(name, email, password, type);
-    // ALTERADO: navegando para a rota de login, que é a principal "/"
-    navigation.navigate("Login"); // Redireciona para a tela de login após o cadastro
+    navigation.navigate("Login");
   };
 
   return (

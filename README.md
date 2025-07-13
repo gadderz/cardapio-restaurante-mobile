@@ -1,50 +1,63 @@
-# Welcome to your Expo app 👋
+# App Mobile - Cardápio de Restaurante
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Este é um projeto desenvolvido como parte do **Trabalho Prático da disciplina de Aplicações Mobile**. O aplicativo simula o cardápio digital de um restaurante, com funcionalidades completas de cadastro, login e gerenciamento de pratos, restaurantes e usuários.
 
-## Get started
+## 📱 Funcionalidades
+### Funcionalidades Obrigatórias
 
-1. Install dependencies
+1. **Tela de Login**
+- Campos: e-mail e senha
+- Botão: "Entrar"
+- Link: “Não possui conta? Cadastre-se”
 
-   ```bash
-   npm install
-   ```
+2. **Cadastro de Usuário**
+- Nome completo
+- E-mail (com validação de formato)
+- Senha
+- Tipo de usuário: cliente ou admin
 
-2. Start the app
+3. **Cadastro de Restaurante** (somente para usuários admin)
+- Nome do restaurante
+- Endereço completo:
+- Rua, número, CEP, Bairro, Cidade, UF
+- Latitude e Longitude (simulados ou reais)
+- CNPJ (com máscara de formatação)
 
-   ```bash
-   npx expo start
-   ```
+4. **Cadastro de Produto / Prato** (somente para usuários admin)
+- Nome do prato
+- Descrição
+- Preço
+- Imagem (upload ou via link)
 
-In the output, you'll find options to open the app in a
+5. **Lista de Cardápio** (acessível a todos)
+- Exibição dos pratos em uma lista vertical
+- Imagem à esquerda
+- Nome do prato em negrito
+- Descrição logo abaixo
+- Preço exibido à direita ou abaixo
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Tecnologias Utilizadas
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- [React Native](https://reactnative.dev/)
+- [Expo](https://expo.dev/)
+- [TypeScript](https://www.typescriptlang.org/) (opcional)
+- [AsyncStorage](https://react-native-async-storage.github.io/async-storage/) (para persistência local)
 
-## Get a fresh project
+## 📱 Demonstração em Vídeo
 
-When you're ready, run:
+📱 Assista ao vídeo de apresentação do app pelo link abaixo:
+📱 [Link para o vídeo no YouTube](https://youtube.com/seu-video-aqui)
+*(ou adicione o arquivo de vídeo na pasta do projeto)*
 
-```bash
-npm run reset-project
-```
+## 📱 Repositório
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Este repositório contém todo o código-fonte do projeto, bem como os recursos
+visuais utilizados e instruções para execução local.
+---
+**Aluno:** [Seu Nome Aqui]
 
-## Learn more
+**Curso:** Arquitetura de software distribuído
 
-To learn more about developing your project with Expo, look at the following resources:
+**Professor:** Fernando Pereira
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+**Entrega Individual - Trabalho Prático: App Mobile - Cardápio de Restaurante**

@@ -5,7 +5,6 @@ import { Button, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { AuthController } from "../../../controllers/AuthController";
 import { LoginScreenProps } from '../types';
 
-// ALTERADO: para export default
 export default function LoginScreen({ navigation }: LoginScreenProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,9 +12,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
   const handleLogin = async () => {
     const user = await AuthController.login(email, password);
     if (user) {
-      // ALTERADO: navegando para a rota de menu
-      // No seu _layout, a tela "MenuScreen" chama-se "menu"
-      navigation.navigate("Home"); // Redireciona para a tela de menu após o login
+      navigation.navigate("Home");
     } else {
       alert("Credenciais inválidas!");
     }

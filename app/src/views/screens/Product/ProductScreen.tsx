@@ -15,70 +15,70 @@ import { Product } from '../../../models/Product';
 import { ProductScreenProps } from '../types';
 
 export default function ProductScreen({ navigation, route }: ProductScreenProps) {
-  const [nome, setNome] = useState('')
-  const [descricao, setDescricao] = useState('')
-  const [preco, setPreco] = useState('')
-  const [imagem, setImagem] = useState('')
-  const [erros, setErros] = useState({
-    nome: false,
-    descricao: false,
-    preco: false,
-    imagem: false
+  const [name, setName] = useState('')
+  const [description, setDescription] = useState('')
+  const [price, setPrice] = useState('')
+  const [image, setImage] = useState('')
+  const [errors, setErrors] = useState({
+    name: false,
+    description: false,
+    price: false,
+    image: false
   })
-  
-  const restauranteId = route.params.restaurantId as string;
-  console.log("Restaurante ID recebido:", restauranteId);
 
-  const validarCampos = (): boolean => {
-    const camposVazios = {
-      nome: nome.trim() === '',
-      descricao: descricao.trim() === '',
-      preco: preco.trim() === '',
-      imagem: imagem.trim() === '',
+  const restaurantId = route.params.restaurantId as string;
+  console.log("Restaurante ID recebido:", restaurantId);
+
+  const validateFields = (): boolean => {
+    const emptyFields = {
+      name: name.trim() === '',
+      description: description.trim() === '',
+      price: price.trim() === '',
+      image: image.trim() === '',
     };
-  
-    console.log("Erros detectados:", camposVazios); // Log para depuração
-    setErros(camposVazios);
-    return !Object.values(camposVazios).some((v) => v);
+
+    console.log("Erros detectados:", emptyFields); // Log para depuração
+    setErrors(emptyFields);
+    return !Object.values(emptyFields).some((v) => v);
   };
 
-  const escolherImagem = async () => {
-    const resultado = await ImagePicker.launchImageLibraryAsync({
+  const selectImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       quality: 1
     })
-    if (!resultado.canceled) {
-      setImagem(resultado.assets[0].uri)
-      setErros((prev) => ({ ...prev, imagem: false }))
+    if (!result.canceled) {
+      setImage(result.assets[0].uri)
+      setErrors((prev) => ({ ...prev, image: false }))
     }
   }
 
-  const salvarPrato = async () => {
-    console.log('Salvando prato:', { nome, descricao, preco, imagem })
-    if (!validarCampos()) {
+  const saveProduct = async () => {
+    console.log('Salvando prato:', { nome: name, descricao: description, preco: price, imagem: image })
+    if (!validateFields()) {
       Alert.alert('⚠️ Campos obrigatórios', 'Preencha todos os campos.')
       return
     }
 
-    const cleanPreco = preco.replace('R$ ', '').replace('.', '').replace(',', '.');
+    const cleanPrice = price.replace('R$ ', '').replace('.', '').replace(',', '.');
 
-    const novoPrato: Product = {
-      name: nome,
-      description: descricao,
-      price: parseFloat(cleanPreco),
-      image: imagem,
-      restaurantId: restauranteId
+    const newProduct: Product = {
+      name: name,
+      description: description,
+      price: parseFloat(cleanPrice),
+      image: image,
+      restaurantId: restaurantId
     }
 
     try {
-      await ProductController.create(novoPrato)
+      await ProductController.create(newProduct)
       console.log("Prato salvo com sucesso!");
       Alert.alert('✅ Sucesso', 'Prato cadastrado com sucesso!')
-      setNome('')
-      setDescricao('')
-      setPreco('')
-      setImagem('') 
+      setName('')
+      setDescription('')
+      setPrice('')
+      setImage('')
     } catch (error) {
       Alert.alert('❌ Erro', 'Não foi possível salvar o prato.')
       console.error(error)
@@ -88,26 +88,26 @@ export default function ProductScreen({ navigation, route }: ProductScreenProps)
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.titulo}>Cadastro de Prato</Text>
-  
+
       <TextInput
         placeholder="Nome do Prato"
-        value={nome}
-        onChangeText={setNome}
-        style={[styles.input, erros.nome && styles.inputError]}
+        value={name}
+        onChangeText={setName}
+        style={[styles.input, errors.name && styles.inputError]}
       />
-      {erros.nome && <Text style={styles.errorText}>O nome do prato é obrigatório.</Text>}
+      {errors.name && <Text style={styles.errorText}>O nome do prato é obrigatório.</Text>}
 
       <TextInput
         placeholder="Descrição"
-        value={descricao}
-        onChangeText={setDescricao}
-        style={[styles.input, erros.descricao && styles.inputError]}
+        value={description}
+        onChangeText={setDescription}
+        style={[styles.input, errors.description && styles.inputError]}
       />
-      {erros.descricao && <Text style={styles.errorText}>A descrição é obrigatória.</Text>}
+      {errors.description && <Text style={styles.errorText}>A descrição é obrigatória.</Text>}
 
       <TextInputMask
         type={'money'}
-        value={preco}
+        value={price}
         options={{
           precision: 2,
           separator: ',',
@@ -115,22 +115,22 @@ export default function ProductScreen({ navigation, route }: ProductScreenProps)
           unit: 'R$ ',
           suffixUnit: ''
         }}
-        onChangeText={(text) => setPreco(text)}
-        style={[styles.input, erros.preco && styles.inputError]}
+        onChangeText={(text) => setPrice(text)}
+        style={[styles.input, errors.price && styles.inputError]}
         placeholder="Preço"
       />
-      {erros.preco && <Text style={styles.errorText}>O preço é obrigatório.</Text>}
-  
-      {imagem ? (
-        <Image source={{ uri: imagem }} style={styles.imagem} />
+      {errors.price && <Text style={styles.errorText}>O preço é obrigatório.</Text>}
+
+      {image ? (
+        <Image source={{ uri: image }} style={styles.imagem} />
       ) : null}
-      {erros.imagem && <Text style={styles.errorText}>A imagem é obrigatória.</Text>}
-  
+      {errors.image && <Text style={styles.errorText}>A imagem é obrigatória.</Text>}
+
       <View style={styles.buttonContainer}>
-        <Button title="Escolher Imagem" onPress={escolherImagem} />
+        <Button title="Escolher Imagem" onPress={selectImage} />
       </View>
       <View style={styles.buttonContainer}>
-        <Button title="Salvar Prato" onPress={salvarPrato} />
+        <Button title="Salvar Prato" onPress={saveProduct} />
       </View>
       <View style={styles.buttonContainer}>
         <Button title="Voltar para o menu" onPress={() => navigation.navigate('Home')} />
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   inputError: {
-    borderColor: 'red', // Define a borda vermelha para campos com erro
+    borderColor: 'red',
   },
   imagem: {
     width: '100%',

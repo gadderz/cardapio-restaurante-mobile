@@ -1,99 +1,96 @@
-import { Restaurante } from '@/app/src/models/Restaurante'
+import { Address, Restaurant } from '@/app/src/models/Restaurant'
 import { Picker } from '@react-native-picker/picker'
 import React, { useState } from 'react'
 import { Alert, Button, ScrollView, StyleSheet, Text, TextInput } from 'react-native'
 import 'react-native-get-random-values'
 import { TextInputMask } from 'react-native-masked-text'
-import { v4 as uuidv4 } from 'uuid'
 import { RestaurantController } from '../../../controllers/RestaurantController'
 import { RestaurantScreenProps } from '../types'
 
-export default function RestaurantScreen({navigation}: RestaurantScreenProps){
-  const [nome, setNome] = useState('')
+export default function RestaurantScreen({ navigation }: RestaurantScreenProps) {
+  const [name, setName] = useState('')
   const [cnpj, setCnpj] = useState('')
-  const [endereco, setEndereco] = useState({
-    rua: '',
-    numero: '',
-    bairro: '',
-    cidade: '',
-    uf: '',
-    cep: '',
+  const [address, setAddress] = useState<Address>({
+    street: '',
+    number: '',
+    neighborhood: '',
+    city: '',
+    state: '',
+    zipCode: '',
     latitude: '',
     longitude: '',
   })
 
   const [erros, setErros] = useState({
-    nome: false,
+    name: false,
     cnpj: false,
-    cep: false,
-    rua: false,
-    numero: false,
-    bairro: false,
-    cidade: false,
-    uf: false,
+    zipCode: false,
+    street: false,
+    number: false,
+    neighborhood: false,
+    city: false,
+    state: false,
   });
 
-  const validarCampos = (): boolean => {
-    const camposVazios = {
-      nome: nome.trim() === '',
+  const validateFields = (): boolean => {
+    const emptyFields = {
+      name: name.trim() === '',
       cnpj: cnpj.trim() === '',
-      cep: endereco.cep.trim() === '',
-      rua: endereco.rua.trim() === '',
-      numero: endereco.numero.trim() === '',
-      bairro: endereco.bairro.trim() === '',
-      cidade: endereco.cidade.trim() === '',
-      uf: endereco.uf.trim() === '',
+      zipCode: address.zipCode.trim() === '',
+      street: address.street.trim() === '',
+      number: address.number.trim() === '',
+      neighborhood: address.neighborhood.trim() === '',
+      city: address.city.trim() === '',
+      state: address.state.trim() === '',
     };
-  
-    setErros(camposVazios); // Atualiza o estado com os erros
-    return !Object.values(camposVazios).some((v) => v); // Retorna true se todos os campos forem válidos
+
+    setErros(emptyFields); // Atualiza o estado com os erros
+    return !Object.values(emptyFields).some((v) => v); // Retorna true se todos os campos forem válidos
   };
 
-  const buscarEnderecoPorCep = async (cep: string) => {
-    if (cep.length !== 8) {
+  const searchAddressByZipCode = async (zipCode: string) => {
+    if (zipCode.length !== 8) {
       Alert.alert('⚠️ CEP inválido', 'O CEP deve conter 8 dígitos.');
       return;
     }
-  
+
     try {
-      const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+      const response = await fetch(`https://viacep.com.br/ws/${zipCode}/json/`);
       const data = await response.json();
-  
+
       if (data.erro) {
         Alert.alert('❌ Erro', 'CEP não encontrado.');
         return;
       }
-  
-      setEndereco((prev) => ({
+
+      setAddress((prev) => ({
         ...prev,
-        rua: data.logradouro || '',
-        bairro: data.bairro || '',
-        cidade: data.localidade || '',
-        uf: data.uf || '',
+        street: data.logradouro || '',
+        neighborhood: data.bairro || '',
+        city: data.localidade || '',
+        zipCode: data.uf || '',
       }));
     } catch (error) {
       Alert.alert('❌ Erro', 'Não foi possível buscar o endereço.');
       console.error(error);
     }
   };
-  
 
-  const handleCadastro = () => {
-    if (!validarCampos()) {
+  const handleRegister = async () => {
+    if (!validateFields()) {
       Alert.alert('⚠️ Campos obrigatórios', 'Preencha todos os campos.');
       return;
     }
-  
-    const restaurante: Restaurante = {
-      id: uuidv4(),
-      nome: nome,
+
+    const restaurant: Restaurant = {
+      name: name,
       cnpj: cnpj,
-      endereco: endereco,
+      address: address,
     };
-  
-    RestaurantController.cadastrarRestaurante(restaurante);
-  
-    navigation.navigate('Product', { restaurantId: restaurante.id}); // Redireciona para a tela inicial após o cadastro
+
+    const createdRestaurant = await RestaurantController.create(restaurant);
+
+    navigation.navigate('Product', { restaurantId: createdRestaurant.id ?? '' });
   };
 
   return (
@@ -102,11 +99,11 @@ export default function RestaurantScreen({navigation}: RestaurantScreenProps){
 
       <TextInput
         placeholder="Nome Restaurante"
-        value={nome}
-        onChangeText={setNome}
-        style={[styles.input, erros.nome && styles.inputError]}
+        value={name}
+        onChangeText={setName}
+        style={[styles.input, erros.name && styles.inputError]}
       />
-      {erros.nome && <Text style={styles.errorText}>O nome do restaurante é obrigatório.</Text>}
+      {erros.name && <Text style={styles.errorText}>O nome do restaurante é obrigatório.</Text>}
 
       <TextInputMask
         type={'cnpj'}
@@ -121,55 +118,55 @@ export default function RestaurantScreen({navigation}: RestaurantScreenProps){
 
       <TextInputMask
         type={'zip-code'}
-        value={endereco.cep}
+        value={address.zipCode}
         onChangeText={(text) => {
-          setEndereco({ ...endereco, cep: text.replace(/\D/g, '') }); // Remove caracteres não numéricos
+          setAddress({ ...address, zipCode: text.replace(/\D/g, '') }); // Remove caracteres não numéricos
           if (text.replace(/\D/g, '').length === 8) {
-            buscarEnderecoPorCep(text.replace(/\D/g, ''));
+            searchAddressByZipCode(text.replace(/\D/g, ''));
           }
         }}
-        style={[styles.input, erros.cep && styles.inputError]}
+        style={[styles.input, erros.zipCode && styles.inputError]}
         placeholder="CEP"
       />
-      {erros.cep && <Text style={styles.errorText}>O CEP é obrigatório.</Text>}
+      {erros.zipCode && <Text style={styles.errorText}>O CEP é obrigatório.</Text>}
 
       <TextInput
         placeholder="Rua"
-        value={endereco.rua}
-        onChangeText={(text) => setEndereco({ ...endereco, rua: text })}
-        style={[styles.input, erros.rua && styles.inputError]}
+        value={address.street}
+        onChangeText={(text) => setAddress({ ...address, street: text })}
+        style={[styles.input, erros.street && styles.inputError]}
       />
-      {erros.rua && <Text style={styles.errorText}>A rua é obrigatória.</Text>}
+      {erros.street && <Text style={styles.errorText}>A rua é obrigatória.</Text>}
 
       <TextInput
         placeholder="Número"
-        value={endereco.numero}
-        onChangeText={(text) => setEndereco({ ...endereco, numero: text.replace(/\D/g, '') })} // Remove caracteres não numéricos
+        value={address.number}
+        onChangeText={(text) => setAddress({ ...address, number: text.replace(/\D/g, '') })} // Remove caracteres não numéricos
         keyboardType="numeric" // Exibe o teclado numérico
-        style={[styles.input, erros.numero && styles.inputError]}
+        style={[styles.input, erros.number && styles.inputError]}
       />
-      {erros.numero && <Text style={styles.errorText}>O número é obrigatório.</Text>}
+      {erros.number && <Text style={styles.errorText}>O número é obrigatório.</Text>}
 
       <TextInput
         placeholder="Bairro"
-        value={endereco.bairro}
-        onChangeText={(text) => setEndereco({ ...endereco, bairro: text })}
-        style={[styles.input, erros.bairro && styles.inputError]}
+        value={address.neighborhood}
+        onChangeText={(text) => setAddress({ ...address, neighborhood: text })}
+        style={[styles.input, erros.neighborhood && styles.inputError]}
       />
-      {erros.bairro && <Text style={styles.errorText}>O bairro é obrigatório.</Text>}
+      {erros.neighborhood && <Text style={styles.errorText}>O bairro é obrigatório.</Text>}
 
       <TextInput
         placeholder="Cidade"
-        value={endereco.cidade}
-        onChangeText={(text) => setEndereco({ ...endereco, cidade: text })}
-        style={[styles.input, erros.cidade && styles.inputError]}
+        value={address.city}
+        onChangeText={(text) => setAddress({ ...address, city: text })}
+        style={[styles.input, erros.city && styles.inputError]}
       />
-      {erros.cidade && <Text style={styles.errorText}>A cidade é obrigatória.</Text>}
+      {erros.city && <Text style={styles.errorText}>A cidade é obrigatória.</Text>}
 
       <Picker
-        selectedValue={endereco.uf}
-        onValueChange={(itemValue) => setEndereco({ ...endereco, uf: itemValue })}
-        style={[styles.input, erros.uf && styles.inputError]}
+        selectedValue={address.state}
+        onValueChange={(itemValue) => setAddress({ ...address, state: itemValue })}
+        style={[styles.input, erros.state && styles.inputError]}
       >
         <Picker.Item label="Selecione o estado" value="" />
         <Picker.Item label="AC" value="AC" />
@@ -200,9 +197,9 @@ export default function RestaurantScreen({navigation}: RestaurantScreenProps){
         <Picker.Item label="SE" value="SE" />
         <Picker.Item label="TO" value="TO" />
       </Picker>
-      {erros.uf && <Text style={styles.errorText}>O estado (UF) é obrigatório.</Text>}
+      {erros.state && <Text style={styles.errorText}>O estado (UF) é obrigatório.</Text>}
 
-      <Button title="Cadastrar Restaurante" onPress={handleCadastro} />
+      <Button title="Cadastrar Restaurante" onPress={handleRegister} />
     </ScrollView>
   )
 }
