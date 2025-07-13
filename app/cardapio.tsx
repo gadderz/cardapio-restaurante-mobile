@@ -13,8 +13,8 @@ import {
 } from 'react-native';
 
 
-import { ProductController } from './src/controllers/ProductController';
-import { Product } from './src/models/Product';
+import { PratoController } from './src/controllers/PratoController';
+import { Prato } from './src/models/Prato';
 
 
 
@@ -23,16 +23,16 @@ export default function CardapioListScreen() {
   const params = useLocalSearchParams<{ restaurantId: string }>();
   const restaurantId = params.restaurantId ?? 'mock-restaurant-id'; // Mantém o mock como fallback
 
-  const [products, setProducts] = useState<Product[]>([]);
+  const [Prato, setPrato] = useState<Prato[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // O useEffect e o resto do componente continuam perfeitos!
   useEffect(() => {
-    const loadProducts = async () => {
+    const loadPrato = async () => {
       setIsLoading(true);
       try {
-        const fetchedProducts = await ProductController.getByRestaurant(restaurantId);
-        setProducts(fetchedProducts);
+        const fetchedPrato = await PratoController.getByRestaurant(restaurantId);
+        setPrato(fetchedPrato);
       } catch (error) {
         console.error("Erro ao carregar os produtos:", error);
       } finally {
@@ -41,7 +41,7 @@ export default function CardapioListScreen() {
     };
 
     if (restaurantId) {
-      loadProducts();
+      loadPrato();
     }
   }, [restaurantId]); 
 
@@ -53,24 +53,24 @@ export default function CardapioListScreen() {
     );
   }
 
-  const renderItem = ({ item }: { item: Product }) => (
+  const renderItem = ({ item }: { item: Prato }) => (
     <View style={styles.itemContainer}>
-      <Image source={{ uri: item.image }} style={styles.image} />
+      <Image source={{ uri: item.imagem }} style={styles.image} />
       <View style={styles.textContainer}>
-        <Text style={styles.itemName}>{item.name}</Text>
-        <Text style={styles.itemDescription}>{item.description}</Text>
+        <Text style={styles.itemName}>{item.nome}</Text>
+        <Text style={styles.itemDescription}>{item.descricao}</Text>
       </View>
       <Text style={styles.itemPrice}>
-        {`R$ ${item.price.toFixed(2).replace('.', ',')}`}
+        {`R$ ${item.preco.toFixed(2).replace('.', ',')}`}
       </Text>
     </View>
   );
 
   return (
     <SafeAreaView style={styles.container}>
-      {products.length > 0 ? (
+      {Prato.length > 0 ? (
         <FlatList
-          data={products}
+          data={Prato}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
           contentContainerStyle={styles.list}
