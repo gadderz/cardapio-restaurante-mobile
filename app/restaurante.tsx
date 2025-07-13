@@ -1,3 +1,5 @@
+import { cadastrarRestaurante } from '@/app/src/controllers/CadastroRestauranteController'
+import { Restaurante } from '@/app/src/models/Restaurante'
 import { Picker } from '@react-native-picker/picker'
 import { router } from "expo-router"
 import React, { useState } from 'react'
@@ -5,10 +7,8 @@ import { Alert, Button, ScrollView, StyleSheet, Text, TextInput } from 'react-na
 import 'react-native-get-random-values'
 import { TextInputMask } from 'react-native-masked-text'
 import { v4 as uuidv4 } from 'uuid'
-import { cadastrarRestaurante } from '../controllers/CadastroRestauranteController'
-import { Restaurante } from '../models/Restaurante'
 
-const CadastroRestaurante = () => {
+export default function CadastroRestauranteScreen(){
   const [nome, setNome] = useState('')
   const [cnpj, setCnpj] = useState('')
   const [endereco, setEndereco] = useState({
@@ -94,7 +94,7 @@ const CadastroRestaurante = () => {
     cadastrarRestaurante(restaurante);
   
     router.push({
-      pathname: "/views/CadastroPrato",
+      pathname: "../prato",
       params: { restauranteId: restaurante.id },
     });
   };
@@ -209,8 +209,6 @@ const CadastroRestaurante = () => {
     </ScrollView>
   )
 }
-
-export default CadastroRestaurante
 
 const styles = StyleSheet.create({
   container: { padding: 20 },

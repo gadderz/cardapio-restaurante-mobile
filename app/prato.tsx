@@ -10,12 +10,13 @@ import {
   View
 } from 'react-native';
 import 'react-native-get-random-values';
+import { router } from 'expo-router'
 import { v4 as uuidv4 } from 'uuid';
-import { cadastrarPrato } from '../controllers/CadastroPratoController';
-import { Prato } from '../models/Prato';
 import { TextInputMask } from 'react-native-masked-text';
+import { Prato } from '@/app/src/models/Prato';
+import { cadastrarPrato } from '@/app/src/controllers/CadastroPratoController';
 
-const CadastroPrato = () => {
+export default function CadastroPratoScreen() {
   const [nome, setNome] = useState('')
   const [descricao, setDescricao] = useState('')
   const [preco, setPreco] = useState('')
@@ -126,11 +127,12 @@ const CadastroPrato = () => {
       <View style={styles.buttonContainer}>
         <Button title="Salvar Prato" onPress={salvarPrato} />
       </View>
+      <View style={styles.buttonContainer}>
+        <Button title="Voltar para o menu" onPress={() => router.push('../menu')} />
+      </View>
     </ScrollView>
   );
 }
-
-export default CadastroPrato
 
 const styles = StyleSheet.create({
   container: {

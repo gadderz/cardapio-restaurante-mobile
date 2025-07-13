@@ -9,6 +9,8 @@ export default function RootLayout() {
       <Stack.Screen name="register" options={{ title: 'Cadastro' }} />
       <Stack.Screen name="menu" options={{ title: 'Menu Principal' }} />
       <Stack.Screen name="cardapio" options={{ title: 'Nosso Cardápio' }} />
+      <Stack.Screen name="restaurante" options={{ title: 'Cadastro Restaurante' }} />
+      <Stack.Screen name="prato" options={{ title: 'Cadastro Prato' }} />
     </Stack>
   );
 }
