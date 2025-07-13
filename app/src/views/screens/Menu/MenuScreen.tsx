@@ -12,11 +12,8 @@ import {
   View
 } from 'react-native';
 
-
-import { ProductController } from './src/controllers/ProductController';
-import { Product } from './src/models/Product';
-
-
+import { ProductController } from '../../../controllers/ProductController';
+import { Product } from '../../../models/Product';
 
 export default function CardapioListScreen() {
   // NOVO: Pegando o restaurantId com o hook do Expo Router

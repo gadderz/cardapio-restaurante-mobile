@@ -1,4 +1,6 @@
+import { ProductController } from '@/app/src/controllers/ProductController';
 import * as ImagePicker from 'expo-image-picker';
+import { router } from 'expo-router';
 import { useSearchParams } from 'expo-router/build/hooks';
 import React, { useState } from 'react';
 import {
@@ -10,11 +12,9 @@ import {
   View
 } from 'react-native';
 import 'react-native-get-random-values';
-import { router } from 'expo-router'
-import { v4 as uuidv4 } from 'uuid';
 import { TextInputMask } from 'react-native-masked-text';
-import { Prato } from '@/app/src/models/Prato';
-import { cadastrarPrato } from '@/app/src/controllers/CadastroPratoController';
+import { v4 as uuidv4 } from 'uuid';
+import { Product } from '../../../models/Product';
 
 export default function CadastroPratoScreen() {
   const [nome, setNome] = useState('')
@@ -64,17 +64,17 @@ export default function CadastroPratoScreen() {
       return
     }
 
-    const novoPrato: Prato = {
+    const novoPrato: Product = {
       id: uuidv4(),
-      nome,
-      descricao,
-      preco: parseFloat(preco),
-      imagem,
+      name: nome,
+      description: descricao,
+      price: parseFloat(preco),
+      image: imagem,
       restaurantId: restauranteId
     }
 
     try {
-      await cadastrarPrato(novoPrato)
+      await ProductController.create(novoPrato)
       console.log("Prato salvo com sucesso!");
       Alert.alert('✅ Sucesso', 'Prato cadastrado com sucesso!')
       setNome('')

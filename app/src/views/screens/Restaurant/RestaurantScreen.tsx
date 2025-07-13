@@ -1,14 +1,14 @@
 import { cadastrarRestaurante } from '@/app/src/controllers/CadastroRestauranteController'
 import { Restaurante } from '@/app/src/models/Restaurante'
 import { Picker } from '@react-native-picker/picker'
-import { router } from "expo-router"
 import React, { useState } from 'react'
 import { Alert, Button, ScrollView, StyleSheet, Text, TextInput } from 'react-native'
 import 'react-native-get-random-values'
 import { TextInputMask } from 'react-native-masked-text'
 import { v4 as uuidv4 } from 'uuid'
+import { RestaurantScreenProps } from '../types'
 
-export default function CadastroRestauranteScreen(){
+export default function RestaurantScreen({navigation}: RestaurantScreenProps){
   const [nome, setNome] = useState('')
   const [cnpj, setCnpj] = useState('')
   const [endereco, setEndereco] = useState({
@@ -93,10 +93,7 @@ export default function CadastroRestauranteScreen(){
   
     cadastrarRestaurante(restaurante);
   
-    router.push({
-      pathname: "../prato",
-      params: { restauranteId: restaurante.id },
-    });
+    navigation.navigate('Product', { restaurantId: restaurante.id}); // Redireciona para a tela inicial após o cadastro
   };
 
   return (

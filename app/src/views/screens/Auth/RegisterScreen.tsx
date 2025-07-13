@@ -1,22 +1,19 @@
-// app/register.tsx
-
-import { useRouter } from 'expo-router'; // REMOVIDO: @react-navigation/native
 import React, { useState } from "react";
 import { Button, Text, TextInput, View } from "react-native";
-import { AuthController } from "./src/controllers/AuthController";
+import { AuthController } from "../../../controllers/AuthController";
+import { RegisterScreenProps } from "../types";
 
 // ALTERADO: para export default
-export default function RegisterScreen() {
+export default function RegisterScreen({ navigation }: RegisterScreenProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [type, setType] = useState<"client" | "admin">("client");
-  const router = useRouter(); // NOVO: usando o hook do Expo Router
 
   const handleRegister = async () => {
     await AuthController.register(name, email, password, type);
     // ALTERADO: navegando para a rota de login, que é a principal "/"
-    router.push("/"); 
+    navigation.navigate("Login"); // Redireciona para a tela de login após o cadastro
   };
 
   return (

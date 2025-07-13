@@ -1,13 +1,12 @@
 // app/menu.tsx
 
-import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-import { AuthController } from "./src/controllers/AuthController";
+import { AuthController } from "../../controllers/AuthController";
+import { HomeScreenProps } from "./types";
 
 // ALTERADO: para export default
-export default function MenuScreen() {
-  const router = useRouter();
+export default function HomeScreen({ navigation } : HomeScreenProps) {
 
   const [isAdmin, setIsAdmin] = useState(false)
 
@@ -24,16 +23,11 @@ export default function MenuScreen() {
 
   // Função para simular a escolha de um restaurante e ir para o cardápio dele
   const openCardapio = (restaurantId: string) => {
-    router.push({
-      pathname: "../cardapio", // Caminho para a tela de cardápio
-      params: { restaurantId: restaurantId }, // Passando o ID mockado para a próxima tela
-    });
+    navigation.navigate("Menu", { restaurantId }); // Navegando para a tela de cardápio com o ID mockado
   };
 
   const openCadastroRestaurante = () => {
-    router.push({
-      pathname: "../restaurante", // Caminho para a tela de cadastro de restaurante
-    });
+    navigation.navigate("Restaurant"); // Navegando para a tela de cadastro de restaurante
   };
 
   return (

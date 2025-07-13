@@ -1,24 +1,13 @@
-import { createStackNavigator } from "@react-navigation/stack";
-import LoginScreen from "..";
-import RegisterScreen from "../register";
-import MenuScreen from "../menu";
-import CardapioListScreen from "../cardapio";
-import CadastroPratoScreen from "../prato";
-import CadastroRestauranteScreen from "../restaurante";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import LoginScreen from "../src/views/screens/Auth/LoginScreen";
+import RegisterScreen from "../src/views/screens/Auth/RegisterScreen";
+import HomeScreen from "../src/views/screens/Home";
+import MenuScreen from "../src/views/screens/Menu/MenuScreen";
+import ProductScreen from "../src/views/screens/Product/ProductScreen";
+import RestaurantScreen from "../src/views/screens/Restaurant/RestaurantScreen";
+import { RootStackParamList } from "../src/views/screens/types";
 
-
-// 1. DEFINA OS PARÂMETROS DE CADA TELA
-export type RootStackParamList = {
- Login: undefined;
- Register: undefined;
- Menu: undefined;
- Cardapio: { restaurantId: string }; // A tela 'Cardapio' espera um objeto com 'restaurantId'
- Restaurante: undefined; // A tela 'Restaurante' não espera parâmetros
- Prato: { restauranteId: string }; // A tela 'Prato' não espera parâmetros
-};
-
-// Use o tipo que acabamos de criar no seu StackNavigator
-const Stack = createStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const AppNavigator = () => {
   return (
@@ -26,9 +15,9 @@ export const AppNavigator = () => {
      <Stack.Screen name="Login" component={LoginScreen} />
      <Stack.Screen name="Register" component={RegisterScreen} />
      <Stack.Screen name="Menu" component={MenuScreen} />
-     <Stack.Screen name="Cardapio" component={CardapioListScreen}  />
-     <Stack.Screen name="Restaurante" component={CadastroRestauranteScreen}  />
-     <Stack.Screen name="Prato" component={CadastroPratoScreen}  />
+     <Stack.Screen name="Home" component={HomeScreen}  />
+     <Stack.Screen name="Restaurant" component={RestaurantScreen}  />
+     <Stack.Screen name="Product" component={ProductScreen}  />
    </Stack.Navigator>
   );
 };
