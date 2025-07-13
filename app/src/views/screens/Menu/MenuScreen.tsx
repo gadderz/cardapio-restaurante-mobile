@@ -1,6 +1,5 @@
 // app/cardapio.tsx
 
-import { useLocalSearchParams } from 'expo-router'; // NOVO: para pegar parâmetros
 import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
@@ -14,11 +13,11 @@ import {
 
 import { ProductController } from '../../../controllers/ProductController';
 import { Product } from '../../../models/Product';
+import { MenuScreenProps } from '../types';
 
-export default function CardapioListScreen() {
+export default function MenuScreen({ route }: MenuScreenProps) {
   // NOVO: Pegando o restaurantId com o hook do Expo Router
-  const params = useLocalSearchParams<{ restaurantId: string }>();
-  const restaurantId = params.restaurantId ?? 'mock-restaurant-id'; // Mantém o mock como fallback
+  const restaurantId = route.params.restaurantId;
 
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -29,6 +28,7 @@ export default function CardapioListScreen() {
       setIsLoading(true);
       try {
         const fetchedProducts = await ProductController.getByRestaurant(restaurantId);
+        console.log("Produtos carregados:", fetchedProducts);
         setProducts(fetchedProducts);
       } catch (error) {
         console.error("Erro ao carregar os produtos:", error);
@@ -69,7 +69,7 @@ export default function CardapioListScreen() {
         <FlatList
           data={products}
           renderItem={renderItem}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id ?? item.name}
           contentContainerStyle={styles.list}
         />
       ) : (

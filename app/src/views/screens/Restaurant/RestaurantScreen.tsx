@@ -1,4 +1,3 @@
-import { cadastrarRestaurante } from '@/app/src/controllers/CadastroRestauranteController'
 import { Restaurante } from '@/app/src/models/Restaurante'
 import { Picker } from '@react-native-picker/picker'
 import React, { useState } from 'react'
@@ -6,6 +5,7 @@ import { Alert, Button, ScrollView, StyleSheet, Text, TextInput } from 'react-na
 import 'react-native-get-random-values'
 import { TextInputMask } from 'react-native-masked-text'
 import { v4 as uuidv4 } from 'uuid'
+import { RestaurantController } from '../../../controllers/RestaurantController'
 import { RestaurantScreenProps } from '../types'
 
 export default function RestaurantScreen({navigation}: RestaurantScreenProps){
@@ -91,7 +91,7 @@ export default function RestaurantScreen({navigation}: RestaurantScreenProps){
       endereco: endereco,
     };
   
-    cadastrarRestaurante(restaurante);
+    RestaurantController.cadastrarRestaurante(restaurante);
   
     navigation.navigate('Product', { restaurantId: restaurante.id}); // Redireciona para a tela inicial após o cadastro
   };

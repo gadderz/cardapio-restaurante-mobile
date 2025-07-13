@@ -1,7 +1,5 @@
 import { ProductController } from '@/app/src/controllers/ProductController';
 import * as ImagePicker from 'expo-image-picker';
-import { router } from 'expo-router';
-import { useSearchParams } from 'expo-router/build/hooks';
 import React, { useState } from 'react';
 import {
   Alert,
@@ -13,10 +11,10 @@ import {
 } from 'react-native';
 import 'react-native-get-random-values';
 import { TextInputMask } from 'react-native-masked-text';
-import { v4 as uuidv4 } from 'uuid';
 import { Product } from '../../../models/Product';
+import { ProductScreenProps } from '../types';
 
-export default function CadastroPratoScreen() {
+export default function ProductScreen({ navigation, route }: ProductScreenProps) {
   const [nome, setNome] = useState('')
   const [descricao, setDescricao] = useState('')
   const [preco, setPreco] = useState('')
@@ -28,8 +26,7 @@ export default function CadastroPratoScreen() {
     imagem: false
   })
   
-  const [searchParams] = useSearchParams();
-  const restauranteId = searchParams[1] as string;
+  const restauranteId = route.params.restaurantId as string;
   console.log("Restaurante ID recebido:", restauranteId);
 
   const validarCampos = (): boolean => {
@@ -64,11 +61,12 @@ export default function CadastroPratoScreen() {
       return
     }
 
+    const cleanPreco = preco.replace('R$ ', '').replace('.', '').replace(',', '.');
+
     const novoPrato: Product = {
-      id: uuidv4(),
       name: nome,
       description: descricao,
-      price: parseFloat(preco),
+      price: parseFloat(cleanPreco),
       image: imagem,
       restaurantId: restauranteId
     }
@@ -110,6 +108,13 @@ export default function CadastroPratoScreen() {
       <TextInputMask
         type={'money'}
         value={preco}
+        options={{
+          precision: 2,
+          separator: ',',
+          delimiter: '.',
+          unit: 'R$ ',
+          suffixUnit: ''
+        }}
         onChangeText={(text) => setPreco(text)}
         style={[styles.input, erros.preco && styles.inputError]}
         placeholder="Preço"
@@ -128,7 +133,7 @@ export default function CadastroPratoScreen() {
         <Button title="Salvar Prato" onPress={salvarPrato} />
       </View>
       <View style={styles.buttonContainer}>
-        <Button title="Voltar para o menu" onPress={() => router.push('../menu')} />
+        <Button title="Voltar para o menu" onPress={() => navigation.navigate('Home')} />
       </View>
     </ScrollView>
   );
