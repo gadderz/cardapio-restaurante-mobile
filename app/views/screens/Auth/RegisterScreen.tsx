@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Text, TextInput, View } from "react-native";
-import { AuthController } from "../../../controllers/AuthController";
+import AuthController from "../../../controllers/AuthController";
 import { RegisterScreenProps } from "../types";
 
 export default function RegisterScreen({ navigation }: RegisterScreenProps) {

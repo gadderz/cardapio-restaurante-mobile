@@ -4,7 +4,7 @@ import { Restaurant } from "../models/Restaurant";
 
 const RESTAURANTS_STORAGE_KEY = '@restaurantApp:restaurants';
 
-export const RestaurantService = {
+const RestaurantService = {
   async create(restaurant: Omit<Restaurant, "id">): Promise<Restaurant> {
     const restaurants = await this.getAll();
     const newRestaurant: Restaurant = {
@@ -32,3 +32,5 @@ export const RestaurantService = {
     return restaurant || null;
   }
 }
+
+export default RestaurantService;

@@ -1,7 +1,7 @@
 import { User, UserType } from "../models/User";
-import { AuthService } from "../services/AuthService";
+import AuthService from "../services/AuthService";
 
-export const AuthController = {
+const AuthController = {
   async register(
     name: string,
     email: string,
@@ -23,3 +23,5 @@ export const AuthController = {
     return AuthService.getCurrentUser();
   },
 };
+
+export default AuthController;

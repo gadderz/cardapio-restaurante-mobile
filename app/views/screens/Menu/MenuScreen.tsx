@@ -9,7 +9,7 @@ import {
   View
 } from 'react-native';
 
-import { ProductController } from '../../../controllers/ProductController';
+import ProductController from '../../../controllers/ProductController';
 import { Product } from '../../../models/Product';
 import { MenuScreenProps } from '../types';
 

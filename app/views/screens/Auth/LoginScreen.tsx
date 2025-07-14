@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Button, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { AuthController } from "../../../controllers/AuthController";
+import AuthController from "../../../controllers/AuthController";
 import { LoginScreenProps } from '../types';
 
 export default function LoginScreen({ navigation }: LoginScreenProps) {

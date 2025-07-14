@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import 'react-native-get-random-values';
 import { TextInputMask } from 'react-native-masked-text';
-import { ProductController } from '../../../controllers/ProductController';
+import ProductController from '../../../controllers/ProductController';
 import { Product } from '../../../models/Product';
 import { ProductScreenProps } from '../types';
 

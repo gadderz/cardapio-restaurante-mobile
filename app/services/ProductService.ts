@@ -4,7 +4,7 @@ import { Product } from '../models/Product';
 
 const PRODUCTS_STORAGE_KEY = '@restaurantApp:products';
 
-export const ProductService = {
+const ProductService = {
   async create(productData: Omit<Product, 'id'>): Promise<Product> {
     const allProducts = await this.getAll();
     const newProduct: Product = {
@@ -39,3 +39,5 @@ export const ProductService = {
     }
   },
 };
+
+export default ProductService;

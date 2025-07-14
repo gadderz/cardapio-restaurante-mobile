@@ -4,7 +4,7 @@ import { User } from "../models/User";
 const USER_KEY = "@RestaurantApp:Users";
 const AUTH_KEY = "@RestaurantApp:Auth";
 
-export const AuthService = {
+const AuthService = {
   // Cadastra um novo usuário
   async register(user: Omit<User, "id">): Promise<User> {
     const users = await this.getUsers();
@@ -41,3 +41,5 @@ export const AuthService = {
     return usersJson ? JSON.parse(usersJson) : [];
   },
 };
+
+export default AuthService;

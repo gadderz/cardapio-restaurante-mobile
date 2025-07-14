@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-import { AuthController } from "../../controllers/AuthController";
-import { RestaurantController } from "../../controllers/RestaurantController";
+import AuthController from "../../controllers/AuthController";
+import RestaurantController from "../../controllers/RestaurantController";
 import { Restaurant } from "../../models/Restaurant";
 import { HomeScreenProps } from "./types";
 

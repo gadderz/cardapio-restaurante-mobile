@@ -1,7 +1,7 @@
 import { Restaurant } from '../models/Restaurant'
-import { RestaurantService } from '../services/RestaurantService'
+import RestaurantService from '../services/RestaurantService'
 
-export const RestaurantController = {
+const RestaurantController = {
     async create (restaurant: Omit<Restaurant, 'id'>): Promise<Restaurant> {
         return RestaurantService.create(restaurant)
     },
@@ -10,3 +10,5 @@ export const RestaurantController = {
         return RestaurantService.getAll()
     },
 }
+
+export default RestaurantController;

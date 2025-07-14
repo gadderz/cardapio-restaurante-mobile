@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { Alert, Button, ScrollView, StyleSheet, Text, TextInput } from 'react-native'
 import 'react-native-get-random-values'
 import { TextInputMask } from 'react-native-masked-text'
-import { RestaurantController } from '../../../controllers/RestaurantController'
+import RestaurantController from '../../../controllers/RestaurantController'
 import { RestaurantScreenProps } from '../types'
 
 export default function RestaurantScreen({ navigation }: RestaurantScreenProps) {

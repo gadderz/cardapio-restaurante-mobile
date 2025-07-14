@@ -1,7 +1,7 @@
 import { Product } from "../models/Product";
-import { ProductService } from "../services/ProductService";
+import ProductService from "../services/ProductService";
 
-export const ProductController = {
+const ProductController = {
   async create(product: Omit<Product, "id">): Promise<Product> {
     return ProductService.create(product);
   },
@@ -14,3 +14,5 @@ export const ProductController = {
     return ProductService.getByRestaurant(restaurantId);
   },
 };
+
+export default ProductController;
