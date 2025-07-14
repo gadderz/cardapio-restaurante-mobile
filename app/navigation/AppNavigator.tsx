@@ -1,15 +1,15 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import LoginScreen from "../src/views/screens/Auth/LoginScreen";
-import RegisterScreen from "../src/views/screens/Auth/RegisterScreen";
-import HomeScreen from "../src/views/screens/Home";
-import MenuScreen from "../src/views/screens/Menu/MenuScreen";
-import ProductScreen from "../src/views/screens/Product/ProductScreen";
-import RestaurantScreen from "../src/views/screens/Restaurant/RestaurantScreen";
-import { RootStackParamList } from "../src/views/screens/types";
+import LoginScreen from "../views/screens/Auth/LoginScreen";
+import RegisterScreen from "../views/screens/Auth/RegisterScreen";
+import HomeScreen from "../views/screens/Home";
+import MenuScreen from "../views/screens/Menu/MenuScreen";
+import ProductScreen from "../views/screens/Product/ProductScreen";
+import RestaurantScreen from "../views/screens/Restaurant/RestaurantScreen";
+import { RootStackParamList } from "../views/screens/types";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-export const AppNavigator = () => {
+export default function AppNavigator () {
   return (
    <Stack.Navigator initialRouteName="Login">
      <Stack.Screen name="Login" component={LoginScreen} />

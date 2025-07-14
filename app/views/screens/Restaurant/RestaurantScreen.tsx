@@ -1,4 +1,4 @@
-import { Address, Restaurant } from '@/app/src/models/Restaurant'
+import { Address, Restaurant } from '@/app/models/Restaurant'
 import { Picker } from '@react-native-picker/picker'
 import React, { useState } from 'react'
 import { Alert, Button, ScrollView, StyleSheet, Text, TextInput } from 'react-native'

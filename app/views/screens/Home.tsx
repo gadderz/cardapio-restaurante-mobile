@@ -39,7 +39,6 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text style={{ fontSize: 22, marginBottom: 20 }}>Tela de Menu Principal</Text>
-      <Text style={{ marginBottom: 10 }}>Aqui você listaria os restaurantes.</Text>
 
       <View style={{ width: '80%', marginBottom: 20 }}>
         <Text style={{ marginBottom: 5 }}>Selecione um restaurante:</Text>
@@ -88,7 +87,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
           }}
         >
           <Text style={{ color: "white", fontSize: 16 }}>
-            👨‍🍳 Ir para Cadastro de Restaurante (Admin)
+            👨‍🍳 Ir para Cadastro de Restaurante
           </Text>
         </TouchableOpacity>
       )}
