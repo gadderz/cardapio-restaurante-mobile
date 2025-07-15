@@ -1,4 +1,4 @@
-# App Mobile - Cardápio de Restaurante
+# App Mobile - Cardápio de Restaurante 🍴
 
 Este é um projeto desenvolvido como parte do **Trabalho Prático da disciplina de Aplicações Mobile**. O aplicativo simula o cardápio digital de um restaurante, com funcionalidades completas de cadastro, login e gerenciamento de pratos, restaurantes e usuários.
 
@@ -36,25 +36,25 @@ Este é um projeto desenvolvido como parte do **Trabalho Prático da disciplina 
 - Descrição logo abaixo
 - Preço exibido à direita ou abaixo
 
-## Tecnologias Utilizadas
+## Tecnologias Utilizadas 📱
 
 - [React Native](https://reactnative.dev/)
 - [Expo](https://expo.dev/)
-- [TypeScript](https://www.typescriptlang.org/) (opcional)
+- [TypeScript](https://www.typescriptlang.org/)
 - [AsyncStorage](https://react-native-async-storage.github.io/async-storage/) (para persistência local)
 
 ## 📱 Demonstração em Vídeo
 
 📱 Assista ao vídeo de apresentação do app pelo link abaixo:
-📱 [Link para o vídeo no YouTube](https://youtube.com/seu-video-aqui)
-*(ou adicione o arquivo de vídeo na pasta do projeto)*
+
+📱 [Link para o vídeo no YouTube](https://www.youtube.com/watch?v=L9B0a_f6a_o)
 
 ## 📱 Repositório
 
 Este repositório contém todo o código-fonte do projeto, bem como os recursos
 visuais utilizados e instruções para execução local.
 ---
-**Aluno:** [Seu Nome Aqui]
+**Aluno:** Vinicius Gadelha
 
 **Curso:** Arquitetura de software distribuído
 
